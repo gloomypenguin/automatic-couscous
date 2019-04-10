@@ -7,7 +7,7 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 // const apiUrl = "http://localhost:1337/localhost:3000/api/classroom";
-const apiUrl = "http://192.168.0.7:3000/api/classroom";
+const apiUrl = 'http://localhost:3000/verbs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,19 @@ export class RestApiService {
   private extractData(res: Response) {
     let body = res;
     return body || { };
+  }
+
+  getVerbs(): Observable<any> {
+    return this.http.get(apiUrl, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+
+  getVerbById(id: string): Observable<any> {
+    const url = `${apiUrl}/${id}`;
+    return this.http.get(url, httpOptions).pipe(
+        map(this.extractData),
+        catchError(this.handleError));
   }
 
   getClassroom(): Observable<any> {

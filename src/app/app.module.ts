@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, RouteReuseStrategy, Routes } from '@angular/router';
 
@@ -11,6 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 
 import { HttpClientModule } from '@angular/common/http';
+ 
+
+
+// import { SearchPipe } from './pipes/search/search.pipe';
+// import { SortPipe } from './pipes/sort/sort.pipe';
+// import { Sort2Pipe } from './pipes/sort/sort2.pipe';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,13 +26,14 @@ import { HttpClientModule } from '@angular/common/http';
     IonicModule.forRoot(),
     AppRoutingModule,
     ComponentsModule,
-    HttpClientModule,
+    HttpClientModule 
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

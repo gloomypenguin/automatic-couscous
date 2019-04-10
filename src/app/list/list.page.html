@@ -1,30 +1,51 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Clasroom List
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/create"><ion-icon name="add-circle"></ion-icon></ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+<ion-header>  
+	<ion-toolbar color="dark">
+		<ion-buttons slot="start">
+		  <ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title>
+		  Verb List
+		</ion-title>
+	  <ion-buttons slot="secondary"> 
+		<ion-button (click)="toggleSearching()" >
+		  <ion-icon slot="icon-only" name="search" slot="end" ></ion-icon>
+		</ion-button> 
+		<ion-button>
+		  <ion-icon slot="icon-only" name="funnel" slot="end" (click)="sort($event)"></ion-icon>
+		</ion-button>
+	  </ion-buttons> 
+	</ion-toolbar> 
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let cr of classrooms" (click)="showDetail(cr.id)">
-      <ion-icon name="desktop" slot="start"></ion-icon>
-      {{cr.class_name}}
-      <div class="item-note" slot="end">
-        {{cr.createdAt | date}}
-      </div>
-    </ion-item>
-  </ion-list>
+
+	<ion-searchbar [(ngModel)]="terms" 
+	*ngIf="isSearching == true"  
+	(ionClear)="toggleSearching($e)"
+	>
+	</ion-searchbar> 
+
+<ion-list lines="full">
+    <ion-item *ngFor="let v of verbs | search : terms | sort : {property: column, order: order}" tappable>
+
+			<ion-label>{{v.verb}}<br/>
+				<ion-note text-wrap>{{v.definition}}</ion-note>  
+			</ion-label>
+			 
+			<ion-icon size="small" [name]="!v.showDetails?'ios-arrow-down':'ios-arrow-forward'" slot="end"></ion-icon>
+ 
+	</ion-item>
+	
+</ion-list>
+	 
+	 
+
+
+
+
   <!--
     <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
+      Y </navigated here from <b>{{selectedItem.title }}</b>
     </div>
   -->
 </ion-content>
